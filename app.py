@@ -8,9 +8,14 @@ from flask_cors import CORS
 load_dotenv()
 
 app = Flask(__name__)
-CORS(app, resources={r"/*": {"origins": "https://petertechdev.github.io/my-nba-feed/"}})  # Replace with your frontend URL
+CORS(app, resources={r"/*": {"origins": "https://petertechdev.github.io/"}})
 
 twitter_session_id = os.getenv("TWITTER_SESSION_ID")
+
+# Check if the session ID is properly loaded
+if not twitter_session_id:
+    raise ValueError("TWITTER_SESSION_ID is not set. Please check your environment variables.")
+
 twitter_app = Twitter(twitter_session_id)
 
 @app.route('/api/tweets/<username>', methods=['GET'])
@@ -23,6 +28,5 @@ def get_tweets(username):
         return jsonify({"error": str(e)}), 500
 
 if __name__ == "__main__":
-    # Use the PORT environment variable provided by Render
     port = int(os.environ.get("PORT", 5000))
     app.run(host="0.0.0.0", port=port)
