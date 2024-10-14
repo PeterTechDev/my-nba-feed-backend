@@ -93,3 +93,6 @@ websocket-client==1.8.0
 Werkzeug==3.0.4
 wrapt==1.16.0
 wsproto==1.2.0
+Flask
+tweety
+python-dotenv
