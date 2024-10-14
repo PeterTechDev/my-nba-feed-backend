@@ -1,21 +1,18 @@
-import os
 from flask import Flask, jsonify
 from tweety import Twitter
 from dotenv import load_dotenv
 from flask_cors import CORS
+import os
 
 # Load environment variables
 load_dotenv()
 
 app = Flask(__name__)
-CORS(app, resources={r"/*": {"origins": "https://petertechdev.github.io/"}})
+
+# Allow CORS for the specific frontend URL
+CORS(app, resources={r"/*": {"origins": "https://petertechdev.github.io"}})
 
 twitter_session_id = os.getenv("TWITTER_SESSION_ID")
-
-# Check if the session ID is properly loaded
-if not twitter_session_id:
-    raise ValueError("TWITTER_SESSION_ID is not set. Please check your environment variables.")
-
 twitter_app = Twitter(twitter_session_id)
 
 @app.route('/api/tweets/<username>', methods=['GET'])
