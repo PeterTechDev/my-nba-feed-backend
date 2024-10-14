@@ -3,10 +3,15 @@ from tweety import Twitter
 from dotenv import load_dotenv
 import os
 
+from flask_cors import CORS
+
+app = Flask(__name__)
+CORS(app, resources={r"/*": {"origins": "https://petertechdev.github.io/my-nba-feed/"}})  # Replace with your frontend URL
+
+
 # Load environment variables from the .env file
 load_dotenv()
 
-app = Flask(__name__)
 
 # Get the Twitter session ID from the environment variable
 twitter_session_id = os.getenv("TWITTER_SESSION_ID")
